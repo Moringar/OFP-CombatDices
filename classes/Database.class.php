@@ -8,6 +8,7 @@ class Database
   private string $dbName;
   private PDO $connexion;
   private PDOStatement $request;
+  
 
   public function __construct(string $host, string $user, string $dbName, string $pass)
   {
@@ -48,5 +49,5 @@ class Database
   {
     // return $this->request->fetchAll();
   }
-    
+
   }

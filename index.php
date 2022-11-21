@@ -6,25 +6,27 @@ spl_autoload_register(function ($class) {
 
 ?>
 
-<h1>COMBAT ARENA Hello</h1>
+<h1>COMBAT ARENA</h1>
 
 <?php
 
 // connection DB
 
-$database = new Database("localhost", "root", "combat_dices", "");
+// $database = new Database("localhost", "root", "combat_dices", "");
 
-$database->connect();
-// $database->prepReq("SELECT * FROM perssonage");
-$personnage = $database->fetchData();
+// var_dump($database);
+
+// $database->connect();
+// // $database->prepReq("SELECT * FROM perssonage");
+// $personnage = $database->fetchData();
 
 
 
 
 // Generate a form to add fighter to the bdd.
 
-$formulaire = new Form("./pages/arena.php", "GET");
-$formulaire->createField("nom", "nom", "Héro");
+$formulaire = new Form("./pages/register.php", "GET");
+$formulaire->createField("name", "name", "Héro");
 $formulaire->createSubmitButton("pouet");
 $formulaire->generateForm();
 
@@ -42,8 +44,8 @@ $gromir->setAttackDamageValue(2);
 
 $aldur->attackOpponent($gromir);
 
-var_dump($aldur);
-var_dump($gromir);
+// var_dump($aldur);
+// var_dump($gromir);
 
 
 ?>
