@@ -70,15 +70,17 @@ function fight($fighterA, $fighterB, $dice){
     }
 }
 
+// Récupération des informations du formulaire d'organisation de combat.
 
-// TODO : Relier les personnages statiques aux éléments qui proviennent de la BDD, selon la séléction des personnages dans le formulaire.
-// Instanciate characters with the Dbb info and instantiate a new dice.
+// Récupération des données relatives aux combattants dans la BDD selon les infos du formulaire de combat.
+
+// Instantiation et hydratation des classes des combatants avec les informations de la BDD.
+
 $opponent_A = new Character("Static_ONE");
 $opponent_B = new Character("Static_TWO");
 $d6 = new Dice(6);
 
 // COMBAT !
-
 fight($opponent_A, $opponent_B, $d6);
 
 ?>

@@ -6,8 +6,6 @@ class Character{
     private $force;
     private $attackDamageValue;
 
-
-
     function __construct($characterName)
     {
         $this->name = $characterName;
