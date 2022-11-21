@@ -26,21 +26,27 @@ function fight($fighterA, $fighterB, $dice){
 
             $fighterA->setAttackDamageValue($dice->rollDice());
             singleAttack($fighterA, $fighterB);
+            echo $fighterA->getName()." a l'initiative, il attaque ". $fighterB->getName() ." et lui inflige ". $fighterA->getAttackDamageValue() ." points de dégats";
+            echo "<br>";
+
 
             $fighterB->setAttackDamageValue($dice->rollDice());
             singleAttack($fighterB, $fighterA);
-            echo $fighterA->getName()." a l'initiative, il attaque ". $fighterB->getName() ." et lui inflige ". $fighterA->getAttackDamageValue() ." points de dégats";
+            echo $fighterB->getName()." riposte et attaque ". $fighterA->getName() ." lui infligeant ". $fighterB->getAttackDamageValue() ." points de dégats";
             echo "<br>";
+            
 
         }
 
         else{
             $fighterB->setAttackDamageValue($dice->rollDice());
             singleAttack($fighterB, $fighterA);
+            echo $fighterB->getName()." a l'initiative, il attaque ". $fighterA->getName() ." et lui inflige ". $fighterB->getAttackDamageValue() ." points de dégats";
+            echo "<br>";
 
             $fighterA->setAttackDamageValue($dice->rollDice());
             singleAttack($fighterA, $fighterB);
-            echo $fighterB->getName()." a l'initiative, il attaque ". $fighterA->getName() ." et lui inflige ". $fighterB->getAttackDamageValue() ." points de dégats";
+            echo $fighterA->getName()." riposte et attaque ". $fighterB->getName() ." lui infligeant ". $fighterA->getAttackDamageValue() ." points de dégats";
             echo "<br>";
         }
 
@@ -65,7 +71,7 @@ function fight($fighterA, $fighterB, $dice){
 }
 
 
-// TODO : Relier les personnages statiques aux éléments qui proviennent du formulaire et de la BDD.
+// TODO : Relier les personnages statiques aux éléments qui proviennent de la BDD, selon la séléction des personnages dans le formulaire.
 // Instanciate characters with the Dbb info and instantiate a new dice.
 $opponent_A = new Character("Static_ONE");
 $opponent_B = new Character("Static_TWO");
