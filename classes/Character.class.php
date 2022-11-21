@@ -9,7 +9,7 @@ class Character{
     function __construct($characterName)
     {
         $this->name = $characterName;
-        $this->lifePoints = 100;
+        
     }
 
     function setLife($lifePoints){

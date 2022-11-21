@@ -33,3 +33,14 @@ $formulaire->generateForm();
 
 ?>
 
+<?php
+
+// form choose personnage to fight
+
+$preReq = $database->prepReq("SELECT name FROM personnage");
+
+
+
+
+
+?>
