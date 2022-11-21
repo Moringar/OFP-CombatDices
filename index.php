@@ -20,29 +20,11 @@ $personnage = $database->fetchData();
 
 
 
-// Generate a form to add fighter to the bdd.
-
-$formulaire = new Form("./pages/arena.php", "GET");
+// Generate a form to add fighter to the bdd and the list.
+$formulaire = new Form("./pages/register.php", "GET");
 $formulaire->createField("nom", "nom", "Héro");
 $formulaire->createSubmitButton("pouet");
 $formulaire->generateForm();
-
-
-// Character Class Test
-$D6 = new Dice(6);
-
-$aldur = new Character("Aldur");
-$aldur->setForce($D6->rollDice());
-$aldur->setAttackDamageValue($D6->rollDice());
-
-$gromir = new Character("Gromir");
-$gromir->setForce($D6->rollDice());
-$gromir->setAttackDamageValue(2);
-
-$aldur->attackOpponent($gromir);
-
-var_dump($aldur);
-var_dump($gromir);
 
 
 ?>
