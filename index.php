@@ -8,7 +8,7 @@
 <?php
 // Generate a form to add fighter to the bdd.
 
-$formulaire = new Form("GET", "./pages/arena.php");
+$formulaire = new Form("./pages/arena.php", "GET");
 $formulaire->createField("nom", "nom", "Héro");
 $formulaire->createSubmitButton("pouet");
 $formulaire->generateForm();
