@@ -1,8 +1,9 @@
 <?php
 // TODO : autoload classes.
 spl_autoload_register(function ($class) {
-  include $class . '.class.php';
+  include 'classes/' . $class . '.class.php';
 });
+
 ?>
 
 <h1>COMBAT ARENA Hello</h1>
