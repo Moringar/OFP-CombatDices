@@ -3,7 +3,7 @@
  include "./classes/Form.class.php"
 ?>
 
-<h1>COMBAT ARENA</h1>
+<h1>COMBAT ARENA Hello</h1>
 
 <?php
 // Generate a form to add fighter to the bdd.
