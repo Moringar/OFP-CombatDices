@@ -131,3 +131,5 @@ $preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_B_cur
 $prepReq = $database->prepReq("DELETE FROM personnage WHERE point_vie <= 0");
 
 ?>
+
+<a href="/">Retour à l'accueil</a>
