@@ -44,10 +44,10 @@ class Database
    * Récupère les données
    * @return bool|array
    */
-  public function fetchData()
+  public function fetchData($method)
 
   {
-    return $this->request->fetchAll(PDO::FETCH_COLUMN);
+    return $this->request->fetchAll($method);
   }
 
   }

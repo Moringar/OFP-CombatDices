@@ -1,23 +1,27 @@
 <?php
 
-class Select{
+class Select
+{
 
     private $name;
     private $options = [];
-    
-    function __construct($name){
+
+    function __construct($name)
+    {
         $this->name = $name;
     }
 
-    function createOptions($value){
+    function createOptions($value)
+    {
         $this->options[] = "<option value=$value>$value</option>";
     }
 
-    function generateSelect(){
+    function generateSelect()
+    {
         echo "<select name=$this->name>";
-            foreach ($this->options as $option){
-                echo $option;
-            }
+        foreach ($this->options as $option) {
+            echo $option;
+        }
         echo "</select>";
     }
 

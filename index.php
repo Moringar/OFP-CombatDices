@@ -15,15 +15,16 @@ $database->connect();
 
 // list of personnage
 
-$preReq = $database->prepReq("SELECT name FROM personnage");
-$fetchData = $database->fetchdata();
+$preReq = $database->prepReq("SELECT name, point_vie FROM personnage");
+$fetchData = $database->fetchdata(PDO::FETCH_DEFAULT);
 
-var_dump($fetchData);
+
+// var_dump($fetchData);
 
 echo"<ul>";
-  foreach($fetchData as $name)
+  foreach($fetchData as $person)
   {
-    echo"<li>$name</li>";
+    echo"<li>$person[0] [PV: $person[1]]</li>";
   }
 echo "<ul>";
 
@@ -42,32 +43,25 @@ $formulaire->generateForm();
 
 $preReq = $database->prepReq("SELECT name FROM personnage");
 
-
-
-
-
 ?>
 
-
-
-
-
-
-
+<form action="./pages/arena.php">
 <?php
 
 $opponent_1_select = new Select("opponent1");
 foreach($fetchData as $name)
 {
-  $opponent_1_select->createOptions($name);
+  $opponent_1_select->createOptions($name[0]);
 }
 $opponent_1_select->generateSelect();
 
 $opponent_2_select = new Select("opponent2");
 foreach($fetchData as $name)
 {
-  $opponent_2_select->createOptions($name);
+  $opponent_2_select->createOptions($name[0]);
 }
 $opponent_2_select->generateSelect();
 
 ?>
+<input type="submit">
+</form>
