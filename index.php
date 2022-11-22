@@ -10,16 +10,22 @@ spl_autoload_register(function ($class) {
 
 <?php
 
-// connection DB
+$database = new Database("localhost", "root", "combat_dices", "");
+$database->connect();
 
-// $database = new Database("localhost", "root", "combat_dices", "");
+// list of personnage
 
-// var_dump($database);
+$preReq = $database->prepReq("SELECT name FROM personnage");
+$fetchData = $database->fetchdata();
 
-// $database->connect();
-// // $database->prepReq("SELECT * FROM perssonage");
-// $personnage = $database->fetchData();
+var_dump($fetchData);
 
+echo"<ul>";
+  foreach($fetchData as $name)
+  {
+    echo"<li>$name</li>";
+  }
+echo "<ul>";
 
 
 

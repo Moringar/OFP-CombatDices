@@ -47,7 +47,7 @@ class Database
   public function fetchData()
 
   {
-    // return $this->request->fetchAll();
+    return $this->request->fetchAll(PDO::FETCH_COLUMN);
   }
 
   }
