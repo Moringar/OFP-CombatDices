@@ -27,7 +27,7 @@ function fight($fighterA, $fighterB, $dice)
         // Test d'initiative.
         $fighterA->setForce($dice->rollDice());
         $fighterB->setForce($dice->rollDice());
-
+ 
 
         // Ordre d'attaque conséquent.
         if ($fighterA->getForce() > $fighterB->getForce()) {
@@ -92,19 +92,20 @@ $opponent_2_name = $_GET["opponent2"];
 
 
 $preReq = $database->prepReq("SELECT point_vie FROM personnage WHERE name ='$opponent_1_name'");
-$op1_lifePoints = $database->fetchdata(PDO::FETCH_COLUMN);
+$op1_lifePoints = $database->fetchdata(PDO::FETCH_OBJ);
 
 $preReq = $database->prepReq("SELECT point_vie FROM personnage WHERE name ='$opponent_2_name'");
-$op2_lifePoints = $database->fetchdata(PDO::FETCH_COLUMN);
+$op2_lifePoints = $database->fetchdata(PDO::FETCH_OBJ);
 
+var_dump($op2_lifePoints);
 
 $opponent_A = new Character($opponent_1_name);
 $opponent_B = new Character($opponent_2_name);
 
 $d6 = new Dice(6);
 
-$opponent_A->setLife($op1_lifePoints[0]);
-$opponent_B->setLife($op2_lifePoints[0]);
+$opponent_A->setLife($op1_lifePoints[0]->point_vie);
+$opponent_B->setLife($op2_lifePoints[0]->point_vie);
 
 // COMBAT !
 ?>
@@ -128,7 +129,10 @@ $preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_A_cur
 
 $preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_B_currentLife' WHERE name = '$opponent_2_name'");
 
+
 $prepReq = $database->prepReq("DELETE FROM personnage WHERE point_vie <= 0");
+
+$preReq = $database->prepReq("UPDATE personnage SET point_vie = (point_vie + 25) WHERE point_vie < 100");
 
 ?>
 

@@ -18,7 +18,7 @@ $database->connect();
 $preReq = $database->prepReq("SELECT name, point_vie FROM personnage");
 $fetchData = $database->fetchdata(PDO::FETCH_OBJ);
 
-var_dump($fetchData);
+// var_dump($fetchData);
 
 // var_dump($fetchData);
 
@@ -30,7 +30,7 @@ echo"<ul>";
 echo "<ul>";
 
 
-
+echo "<hr>";
 // Generate a form to add fighter to the bdd.
 $formulaire = new Form("./pages/register.php", "GET");
 $formulaire->createField("text", "name", "name", "Héro");
