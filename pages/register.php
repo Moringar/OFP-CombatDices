@@ -4,14 +4,17 @@ spl_autoload_register(function ($class) {
   include '../classes/' . $class . '.class.php';
 });
 
-$database = new Database("localhost", "root", "combat_dices", "");
+$database = new Database("localhost", "root", "combat_dices", "root");
 $database->connect();
 
-$personnage = $database->fetchData();
 
 $name = $_GET['name'];
 
 $preReq = $database->prepReq("SELECT * FROM personnage WHERE name = :name", ["name"=>$name]);
+
+$personnage = $database->fetchData(PDO::FETCH_OBJ);
+var_dump($personnage);
+
 
 if($preReq->rowCount() > 0)
 {

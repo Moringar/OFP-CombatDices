@@ -83,7 +83,7 @@ function fight($fighterA, $fighterB, $dice)
 
 // conection database
 
-$database = new Database("localhost", "root", "combat_dices", "");
+$database = new Database("localhost", "root", "combat_dices", "root");
 $database->connect();
 
 // list of personnage
