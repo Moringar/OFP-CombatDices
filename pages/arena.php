@@ -10,12 +10,34 @@ spl_autoload_register(function ($class) {
 //  FUNCTIONS ===============================================
 
 // Simulate a single attack
+
+function nameAttack(){
+    $attacks = [
+        "effectue une mawashigeri sur", 
+        "frappe très fort", 
+        "défonce le visage de", 
+        "dégomme les côtes de",
+        "démonte les genoux de ", 
+        "casse les dents de", 
+        "délivre un immense crochet du menton a", 
+        "attrape la table basse et l'énfonce dans", 
+        "lui fait une pichenette vigoureuse sur l'oreille de", 
+        "fait une brulûre indienne a", 
+        "insulte violemment", 
+        "étale du piment dans les yeux de"
+    ];
+
+    $i = rand(0, sizeof($attacks));
+
+
+    return $attacks[$i];
+}
+
 function singleAttack($attacker, $target, $dice)
 {
     $attacker->setAttackDamageValue($dice->rollDice());
     $attacker->attackOpponent($target);
 }
-
 
 
 //Simulate the initiative test and the order of attack and check if there is a win.
@@ -33,24 +55,24 @@ function fight($fighterA, $fighterB, $dice)
         if ($fighterA->getForce() > $fighterB->getForce()) {
             singleAttack($fighterA, $fighterB, $dice);
 
-            echo "<p>" . $fighterA->getName() . " a l'initiative, il attaque " . $fighterB->getName() . " et lui inflige " . $fighterA->getAttackDamageValue() . " points de dégats </p>";
+            echo "<p>" . $fighterA->getName() . " a l'initiative et ".nameAttack()." " . $fighterB->getName() . " et lui inflige " . $fighterA->getAttackDamageValue() . " points de dégats </p>";
 
             if ($fighterB->getLife() > 0) {
                 singleAttack($fighterB, $fighterA, $dice);
 
-                echo "<p>" . $fighterB->getName() . " riposte et attaque " . $fighterA->getName() . " lui infligeant " . $fighterB->getAttackDamageValue() . " points de dégats </p>";
+                echo "<p>" . $fighterB->getName() . " riposte et ".nameAttack()." " . $fighterA->getName() . " lui infligeant " . $fighterB->getAttackDamageValue() . " points de dégats </p>";
             } else {
                 echo "<p>" . $fighterB->getName() . " succombe des coups de " . $fighterA->getName() . "</p>";
             }
         } else {
             singleAttack($fighterB, $fighterA, $dice);
 
-            echo "<p>" . $fighterB->getName() . " a l'initiative, il attaque " . $fighterA->getName() . " et lui inflige " . $fighterB->getAttackDamageValue() . " points de dégats </p>";
+            echo "<p>" . $fighterB->getName() . " a l'initiative et ".nameAttack()." " . $fighterA->getName() . " et lui inflige " . $fighterB->getAttackDamageValue() . " points de dégats </p>";
 
             if ($fighterA->getLife() > 0) {
                 singleAttack($fighterA, $fighterB, $dice);
 
-                echo "<p>" . $fighterA->getName() . " riposte et attaque " . $fighterB->getName() . " lui infligeant " . $fighterA->getAttackDamageValue() . " points de dégats </p>";
+                echo "<p>" . $fighterA->getName() . " riposte et ".nameAttack()." " . $fighterB->getName() . " lui infligeant " . $fighterA->getAttackDamageValue() . " points de dégats </p>";
             } else {
                 echo "<p>" . $fighterA->getName() . " succombe des coups de " . $fighterB->getName() . "</p>";
             }
