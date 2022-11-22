@@ -50,6 +50,7 @@ $preReq = $database->prepReq("SELECT name FROM personnage");
 <?php
 
 $opponent_1_select = new Select("opponent1");
+$opponent_1_select->labelOption("Personnage");
 foreach($fetchData as $person)
 {
   $opponent_1_select->createOptions($person->name);
@@ -57,6 +58,7 @@ foreach($fetchData as $person)
 $opponent_1_select->generateSelect();
 
 $opponent_2_select = new Select("opponent2");
+$opponent_2_select->labelOption("Personnage");
 foreach($fetchData as $person)
 {
   $opponent_2_select->createOptions($person->name);

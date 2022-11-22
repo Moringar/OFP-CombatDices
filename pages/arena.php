@@ -27,7 +27,7 @@ function nameAttack(){
         "étale du piment dans les yeux de"
     ];
 
-    $i = rand(0, sizeof($attacks));
+    $i = rand(0, sizeof($attacks)-1);
 
 
     return $attacks[$i];
@@ -103,59 +103,70 @@ function fight($fighterA, $fighterB, $dice)
 
 // Instantiation et hydratation des classes des combatants avec les informations de la BDD.
 
-// conection database
 
-$database = new Database("localhost", "root", "combat_dices", "root");
-$database->connect();
+// if there is not a personnage DIE
 
-// list of personnage
-$opponent_1_name = $_GET["opponent1"];
-$opponent_2_name = $_GET["opponent2"];
+if( $_GET["opponent1"] == '' || $_GET["opponent2"]  == '' ){
+    echo"Choose a personnage to play <br>";
+}
+else if ( $_GET["opponent1"] == $_GET["opponent2"]){
+    echo "Suicide is a very bad idea, call for help. <br>";
+}
+else {
 
+    // conection database
 
-$preReq = $database->prepReq("SELECT point_vie FROM personnage WHERE name ='$opponent_1_name'");
-$op1_lifePoints = $database->fetchdata(PDO::FETCH_OBJ);
+    $database = new Database("localhost", "root", "combat_dices", "root");
+    $database->connect();
 
-$preReq = $database->prepReq("SELECT point_vie FROM personnage WHERE name ='$opponent_2_name'");
-$op2_lifePoints = $database->fetchdata(PDO::FETCH_OBJ);
-
-var_dump($op2_lifePoints);
-
-$opponent_A = new Character($opponent_1_name);
-$opponent_B = new Character($opponent_2_name);
-
-$d6 = new Dice(6);
-
-$opponent_A->setLife($op1_lifePoints[0]->point_vie);
-$opponent_B->setLife($op2_lifePoints[0]->point_vie);
-
-// COMBAT !
-?>
+    // list of personnage
+    $opponent_1_name = $_GET["opponent1"];
+    $opponent_2_name = $_GET["opponent2"];
 
 
-<section class="arena">
-    <h2>MORTAAAL KOOMMMBAAAAT</h2>
+    $preReq = $database->prepReq("SELECT point_vie FROM personnage WHERE name ='$opponent_1_name'");
+    $op1_lifePoints = $database->fetchdata(PDO::FETCH_OBJ);
+
+    $preReq = $database->prepReq("SELECT point_vie FROM personnage WHERE name ='$opponent_2_name'");
+    $op2_lifePoints = $database->fetchdata(PDO::FETCH_OBJ);
+
+    var_dump($op2_lifePoints);
+
+    $opponent_A = new Character($opponent_1_name);
+    $opponent_B = new Character($opponent_2_name);
+
+    $d6 = new Dice(6);
+
+    $opponent_A->setLife($op1_lifePoints[0]->point_vie);
+    $opponent_B->setLife($op2_lifePoints[0]->point_vie);
+
+    // COMBAT !
+    ?>
+
+
+    <section class="arena">
+        <h2>MORTAAAL KOOMMMBAAAAT</h2>
+
+        <?php
+        fight($opponent_A, $opponent_B, $d6);
+        ?>
+    </section>
 
     <?php
-    fight($opponent_A, $opponent_B, $d6);
+
+    $opponent_A_currentLife = $opponent_A->getLife();
+    $opponent_B_currentLife = $opponent_B->getLife();
+
+
+    $preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_A_currentLife' WHERE name = '$opponent_1_name'");
+
+    $preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_B_currentLife' WHERE name = '$opponent_2_name'");
+
+
+    $prepReq = $database->prepReq("DELETE FROM personnage WHERE point_vie <= 0");
+
+    $preReq = $database->prepReq("UPDATE personnage SET point_vie = (point_vie + 25) WHERE point_vie < 100");
+}
     ?>
-</section>
-
-<?php
-
-$opponent_A_currentLife = $opponent_A->getLife();
-$opponent_B_currentLife = $opponent_B->getLife();
-
-
-$preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_A_currentLife' WHERE name = '$opponent_1_name'");
-
-$preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_B_currentLife' WHERE name = '$opponent_2_name'");
-
-
-$prepReq = $database->prepReq("DELETE FROM personnage WHERE point_vie <= 0");
-
-$preReq = $database->prepReq("UPDATE personnage SET point_vie = (point_vie + 25) WHERE point_vie < 100");
-
-?>
 
 <a href="/">Retour à l'accueil</a>
