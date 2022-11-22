@@ -30,23 +30,41 @@ echo "<ul>";
 
 
 // Generate a form to add fighter to the bdd.
-
 $formulaire = new Form("./pages/register.php", "GET");
-$formulaire->createField("name", "name", "Héro");
+$formulaire->createField("text", "name", "name", "Héro");
 $formulaire->createSubmitButton("pouet");
 $formulaire->generateForm();
-
-
 ?>
 
 <?php
 
 // form choose personnage to fight
 
-$preReq = $database->prepReq("SELECT name FROM personnage");
+// $preReq = $database->prepReq("SELECT name FROM personnage");
 
 
 
 
 
+?>
+
+
+
+
+
+
+
+<?php
+$opponent_1_select = new Select("opponent1");
+$opponent_1_select->createOptions("Gerard");
+$opponent_1_select->createOptions("Lucie");
+$opponent_1_select->createOptions("Popo");
+$opponent_1_select->generateSelect();
+
+
+$opponent_2_select = new Select("opponent2");
+$opponent_2_select->createOptions("Annie");
+$opponent_2_select->createOptions("Florent");
+$opponent_2_select->createOptions("Jacques");
+$opponent_2_select->createOptions("Momo");$opponent_2_select->generateSelect();
 ?>
