@@ -16,9 +16,9 @@ class Form{
         $this->form_method = $methodField;
     }
 
-    public function createField($fieldPublicName, $fieldName, $placeholder){
+    public function createField($type, $fieldPublicName, $fieldName, $placeholder){
         $this->fields[] = "<label for=$fieldName>$fieldPublicName</label> 
-        <input type='text' name=$fieldName placeholder=$placeholder>";
+        <input type=$type name=$fieldName placeholder=$placeholder>";
 
     }
 
