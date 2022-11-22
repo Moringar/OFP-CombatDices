@@ -22,9 +22,16 @@ class Form{
 
     }
 
-    public function createSubmitButton($buttonName){
-        $this->fields[]= "<input type='submit' value=$buttonName>";
+    public function createRadio($name, $imageLink){
+        $this->fields[] = 
+        "<label><input type='radio' name=$name hidden value='small'><img src=$imageLink></label>";
+
     }
+            
+    public function createSubmitButton($buttonName){
+        $this->fields[] = "<input type='submit' value=$buttonName>";
+    }
+
 
 
 
