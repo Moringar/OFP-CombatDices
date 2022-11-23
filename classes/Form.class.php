@@ -18,7 +18,7 @@ class Form{
 
     public function createField($type, $fieldPublicName, $fieldName, $placeholder){
         $this->fields[] = "<label for=$fieldName>$fieldPublicName</label> 
-        <input type=$type name=$fieldName placeholder=$placeholder>";
+        <input type=$type name=$fieldName placeholder=$placeholder required>";
 
     }
 
