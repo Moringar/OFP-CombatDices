@@ -13,12 +13,15 @@ spl_autoload_register(function ($class) {
 $database = new Database("localhost", "root", "combat_dices", "root");
 $database->connect();
 
-$files = scandir('assets/img/');
+$files = array_diff(scandir('assets/img/'), array(',', '..'));
 foreach($files as $file) {
   
   // $database->prepReq("INSERT INTO avatar (link) VALUE (:link)", ["link => $files"]);
-  
-  var_dump($files);
+  echo $file;
+  echo "<br>";
+  // var_dump($_SERVER);
+  // var_dump(realpath($file));
+echo "<img src='/assets/img/$file'>";
 }
 
 
