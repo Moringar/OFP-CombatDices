@@ -13,6 +13,9 @@ spl_autoload_register(function ($class) {
 $database = new Database("localhost", "root", "combat_dices", "root");
 $database->connect();
 
+
+
+
 $files = scandir('assets/img/');
 foreach($files as $file) {
   
