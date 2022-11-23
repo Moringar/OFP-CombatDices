@@ -32,4 +32,5 @@ if($preReq->rowCount() > 0)
 }
 echo"<br>";
 ?>
+
 <a href="/">Retour à l'accueil</a>

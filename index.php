@@ -14,8 +14,8 @@ spl_autoload_register(function ($class)
 $database = new Database("localhost", "root", "combat_dices", "root");
 $database->connect();
 
-
-$files = scandir('assets/img/');
+// conn img with DB
+$files = array_diff(scandir('assets/img/'), array('.', '..'));
 
 foreach ($files as $file) {
 
@@ -24,18 +24,15 @@ foreach ($files as $file) {
   $linkCheck = $database->prepReq("SELECT * FROM avatar WHERE link = :link", ["link" => $link]);
   
 
-  if ($linkCheck->rowCount() > 0) 
+
+  if ($linkCheck->rowCount() === 0) 
   {
     $database->prepReq("INSERT INTO avatar (link) VALUE (:link)", ['link' => $link]);
     echo "<br>";
-  } else 
-  {
-    null;
   } 
-  // var_dump($linkCheck);
+  
+  
 }
-
-
 
 
 // list of personnage
