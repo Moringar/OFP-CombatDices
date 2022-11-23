@@ -1,6 +1,7 @@
 <?php
 // TODO : autoload classes.
-spl_autoload_register(function ($class) {
+spl_autoload_register(function ($class) 
+{
   include 'classes/' . $class . '.class.php';
 });
 
@@ -16,14 +17,22 @@ $database->connect();
 
 $files = scandir('assets/img/');
 
-foreach($files as $file) {
+foreach ($files as $file) {
+
+  $link = "<img src='/assets/img/$file'>";
   
-  // $database->prepReq("INSERT INTO avatar (link) VALUE (:link)", ["link => $files"]);
-  echo $file;
-  echo "<br>";
-  // var_dump($_SERVER);
-  // var_dump(realpath($file));
-echo "<img src='/assets/img/$file'>";
+  $linkCheck = $database->prepReq("SELECT * FROM avatar WHERE link = :link", ["link" => $link]);
+  
+
+  if ($linkCheck->rowCount() > 0) 
+  {
+    $database->prepReq("INSERT INTO avatar (link) VALUE (:link)", ['link' => $link]);
+    echo "<br>";
+  } else 
+  {
+    null;
+  } 
+  // var_dump($linkCheck);
 }
 
 
@@ -63,15 +72,13 @@ $formulaire->generateForm();
 
 $preReq = $database->prepReq("SELECT name FROM personnage");
 
-if (isset($_GET['msg']))
-{
-  if ($_GET['msg']== 'error')  {
-  $message = "Personnage déja existant";
-  echo $message;
-} else
-{
-  echo "Vous êtes inscrit...bonne chance ";
-}
+if (isset($_GET['msg'])) {
+  if ($_GET['msg'] == 'error') {
+    $message = "Personnage déja existant";
+    echo $message;
+  } else {
+    echo "Vous êtes inscrit...bonne chance ";
+  }
 }
 
 
