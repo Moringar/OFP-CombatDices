@@ -13,6 +13,17 @@ spl_autoload_register(function ($class) {
 $database = new Database("localhost", "root", "combat_dices", "root");
 $database->connect();
 
+$files = scandir('assets/img/');
+foreach($files as $file) {
+  
+  // $database->prepReq("INSERT INTO avatar (link) VALUE (:link)", ["link => $files"]);
+  
+  var_dump($files);
+}
+
+
+
+
 // list of personnage
 
 $preReq = $database->prepReq("SELECT name, point_vie FROM personnage");
