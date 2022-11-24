@@ -49,7 +49,7 @@ $fetchData = $database->fetchdata(PDO::FETCH_OBJ);
 
 echo "<ul>";
 foreach ($fetchData as $person) {
-  echo "<li>$person->name [PV: $person->point_vie ] </li>";
+  echo "<li class='life'>$person->name [PV: $person->point_vie ] </li>";
 }
 echo "<ul>";
 
