@@ -11,7 +11,7 @@ spl_autoload_register(function ($class) {
 // Simulate a single attack name to add flavor to the combat.
 function nameAttack(){
     $attacks = [
-        "effectue une mawashigeri sur", 
+        "effectue un mawashigeri sur", 
         "frappe très fort", 
         "défonce le visage de", 
         "dégomme les côtes de",
@@ -19,10 +19,13 @@ function nameAttack(){
         "casse les dents de", 
         "délivre un immense crochet du menton a", 
         "attrape la table basse et l'énfonce dans", 
-        "lui fait une pichenette vigoureuse sur l'oreille de", 
+        "fait une pichenette vigoureuse sur l'oreille de", 
         "fait une brulûre indienne a", 
         "insulte violemment", 
-        "étale du piment dans les yeux de"
+        "étale du piment dans les yeux de",
+        "joue l'intégrale de Claude Barzotti sur une enceinte géante devant",
+        "lance du café brûlant sur", 
+        "raconte une histoire sordide a",
     ];
     $i = rand(0, sizeof($attacks)-1);
     return $attacks[$i];
@@ -150,7 +153,7 @@ else {
     // $preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_B_currentLife' WHERE name = '$opponent_2_name'");
     // $prepReq = $database->prepReq("DELETE FROM personnage WHERE point_vie <= 0");
     // $preReq = $database->prepReq("UPDATE personnage SET point_vie = (point_vie + 25) WHERE point_vie < 100");
-    
+
 }    // ============ UPDATE DE DES COMBATTANTS ( FIN ) ============
 
     ?>
