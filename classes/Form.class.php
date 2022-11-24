@@ -22,9 +22,9 @@ class Form{
 
     }
 
-    public function createRadio($name, $imageLink){
+    public function createRadio($name, $imageLink, $value){
         $this->fields[] = 
-        "<label><input type='radio' name=$name hidden value='small'><img src=$imageLink></label>";
+        "<label><input type='radio' name=$name value=$value > $imageLink </label>";
 
     }
             
@@ -32,6 +32,13 @@ class Form{
         $this->fields[] = "<input type='submit' value=$buttonName>";
     }
 
+    public function openSection(){
+        $this->fields[] = "<section>";
+    }
+
+    public function closeSection(){
+        $this->fields[] = "</section>";
+    }
 
 
 

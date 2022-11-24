@@ -55,8 +55,21 @@ echo "<hr>";
 // Generate a form to add fighter to the bdd.
 $formulaire = new Form("./pages/register.php", "GET");
 $formulaire->createField("text", "name", "name", "Héro");
-$formulaire->createRadio('Remi', "./assets/img/Swords.webp");
-$formulaire->createSubmitButton("pouet");
+
+
+$formulaire->openSection();
+
+$database->prepReq("SELECT link, id FROM avatar ");
+$listAvatar = $database->fetchdata(PDO::FETCH_OBJ);
+
+foreach($listAvatar as $avatar){
+  $formulaire->createRadio("avatar-selection", $avatar->link, $avatar->id);
+}
+$formulaire->closeSection();
+
+
+
+$formulaire->createSubmitButton("Nouveau personnage");
 $formulaire->generateForm();
 
 ?>
