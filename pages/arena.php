@@ -7,10 +7,8 @@ spl_autoload_register(function ($class) {
 
 
 
-//  FUNCTIONS ===============================================
-
-// Simulate a single attack
-
+//  FUNCTIONS ===================================================================================
+// Simulate a single attack name to add flavor to the combat.
 function nameAttack(){
     $attacks = [
         "effectue une mawashigeri sur", 
@@ -26,13 +24,11 @@ function nameAttack(){
         "insulte violemment", 
         "étale du piment dans les yeux de"
     ];
-
     $i = rand(0, sizeof($attacks)-1);
-
-
     return $attacks[$i];
 }
 
+// Simulate a single attack from an opponent to the other, and use a dice to do it.
 function singleAttack($attacker, $target, $dice)
 {
     $attacker->setAttackDamageValue($dice->rollDice());
@@ -40,18 +36,18 @@ function singleAttack($attacker, $target, $dice)
 }
 
 
-//Simulate the initiative test and the order of attack and check if there is a win.
+//simulate the whole fight between two opponents.
+// TODO : comment stages of the combat and clean that stuff. I'ts messy.
 function fight($fighterA, $fighterB, $dice)
 {
     $isKO = false;
     while (!$isKO) {
-
-        // Test d'initiative.
+        // Init and force test. Will define who start first and define force of the action.
         $fighterA->setForce($dice->rollDice());
         $fighterB->setForce($dice->rollDice());
         echo "<round>";
 
-        // Ordre d'attaque conséquent.
+        // WIll choose who starts, simulate an attach and display a descriptive message.
         if ($fighterA->getForce() > $fighterB->getForce()) {
             singleAttack($fighterA, $fighterB, $dice);
 
@@ -80,10 +76,9 @@ function fight($fighterA, $fighterB, $dice)
         echo "</round>";
 
         echo "<result>";
-        //Compte rendu de l'action et fin de boucle en cas de KO.
+        //Gives the result of a round OR give the result of the whole fight at the end if there is a KO.
         if ($fighterA->getLife() <= 0 or $fighterB->getLife() <= 0) {
             $isKO = true;
-
             if ($fighterA->getLife() <= 0) {
                 echo "<p>" . $fighterA->getName() . " n'est plus en mesure de se battre, " . $fighterB->getName() . " est le vainqueur.</p>";
             }
@@ -97,32 +92,23 @@ function fight($fighterA, $fighterB, $dice)
     }
 }
 
-// Récupération des informations du formulaire d'organisation de combat.
+// Début de partie =======================================================================================================================
+//======================================================================================================================================
 
-// Récupération des données relatives aux combattants dans la BDD selon les infos du formulaire de combat.
-
-// Instantiation et hydratation des classes des combatants avec les informations de la BDD.
-
-
-// if there is not a personnage DIE
-
+// displays the message If the player entered the arena without choosing opponent.
 if( $_GET["opponent1"] == '' || $_GET["opponent2"]  == '' ){
     echo"Choose a personnage to play <br>";
 }
+// displays a message if the player made a character fight iteself.
 else if ( $_GET["opponent1"] == $_GET["opponent2"]){
     echo "Suicide is a very bad idea, call for help. <br>";
 }
 else {
-
-    // conection database
-
     $database = new Database("localhost", "root", "combat_dices", "root");
     $database->connect();
-
     // list of personnage
     $opponent_1_name = $_GET["opponent1"];
     $opponent_2_name = $_GET["opponent2"];
-
 
     $preReq = $database->prepReq("SELECT point_vie FROM personnage WHERE name ='$opponent_1_name'");
     $op1_lifePoints = $database->fetchdata(PDO::FETCH_OBJ);
@@ -135,20 +121,17 @@ else {
     $opponent_A = new Character($opponent_1_name);
     $opponent_B = new Character($opponent_2_name);
 
-    $d6 = new Dice(6);
-
     $opponent_A->setLife($op1_lifePoints[0]->point_vie);
     $opponent_B->setLife($op2_lifePoints[0]->point_vie);
-
-    // COMBAT !
     ?>
 
-
+<!-- Inclusion de la feuille de style. -->
     <link rel="stylesheet" href="../style/index.css">
 
+    <!-- Création de l'ARENA, définition de la valeur de dé et appel de la fonction de combat a mort complète. -->
     <section class="arena">
-
         <?php
+        $d6 = new Dice(6);
         fight($opponent_A, $opponent_B, $d6);
         ?>
     </section>
@@ -159,15 +142,17 @@ else {
     $opponent_B_currentLife = $opponent_B->getLife();
 
 
+    // ============ UPDATE DE DES COMBATTANTS ( DEBUT ) ============ 
+    //  Commented to work ok style 
+    // TODO: reactivate it before leaving.
+
     // $preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_A_currentLife' WHERE name = '$opponent_1_name'");
-
     // $preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_B_currentLife' WHERE name = '$opponent_2_name'");
-
-
     // $prepReq = $database->prepReq("DELETE FROM personnage WHERE point_vie <= 0");
-
     // $preReq = $database->prepReq("UPDATE personnage SET point_vie = (point_vie + 25) WHERE point_vie < 100");
-}
+    
+}    // ============ UPDATE DE DES COMBATTANTS ( FIN ) ============
+
     ?>
 
 <script src="../scripts/arena.js"></script>

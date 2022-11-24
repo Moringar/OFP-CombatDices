@@ -6,6 +6,7 @@ spl_autoload_register(function ($class)
 });
 ?>
 
+<!-- Includes the stylesheet -->
 <head>
   <link rel="stylesheet" href="./style/index.css">
 </head>
@@ -17,35 +18,22 @@ spl_autoload_register(function ($class)
 $database = new Database("localhost", "root", "combat_dices", "root");
 $database->connect();
 
-// conn img with DB
+// Inserts links of files in the IMG folder to the database.
 $files = array_diff(scandir('assets/img/'), array('.', '..'));
-
-foreach ($files as $file) {
-
+foreach ($files as $file) 
+{
   $link = "<img src='/assets/img/$file'>";
-  
   $linkCheck = $database->prepReq("SELECT * FROM avatar WHERE link = :link", ["link" => $link]);
-  
-
-
   if ($linkCheck->rowCount() === 0) 
   {
     $database->prepReq("INSERT INTO avatar (link) VALUE (:link)", ['link' => $link]);
     echo "<br>";
   } 
-  
-  
 }
 
-
-// list of personnage
-
+// Displays a list of all the created characters
 $preReq = $database->prepReq("SELECT name, point_vie FROM personnage");
 $fetchData = $database->fetchdata(PDO::FETCH_OBJ);
-
-// var_dump($fetchData);
-
-// var_dump($fetchData);
 
 echo "<ul>";
 foreach ($fetchData as $person) {
@@ -53,36 +41,27 @@ foreach ($fetchData as $person) {
 }
 echo "<ul>";
 
-
 echo "<hr>";
-// Generate a form to add fighter to the bdd.
+
+
+// Generate a form to add fighter to the bdd, and assign it a fighter portrait.
 $formulaire = new Form("./pages/register.php", "GET");
 $formulaire->createField("text", "name", "name", "Héro");
-
-
 $formulaire->openSection();
-
 $database->prepReq("SELECT link, id FROM avatar ");
 $listAvatar = $database->fetchdata(PDO::FETCH_OBJ);
-
 foreach($listAvatar as $avatar){
   $formulaire->createRadio("avatar-selection", $avatar->link, $avatar->id);
 }
 $formulaire->closeSection();
-
-
-
 $formulaire->createSubmitButton("POUET");
 $formulaire->generateForm();
-
 ?>
 
+
+
+<!-- Displays a message if the user tried to create an already existing fighter. -->
 <?php
-
-// form choose personnage to fight
-
-
-
 $preReq = $database->prepReq("SELECT name FROM personnage");
 
 if (isset($_GET['msg'])) {
@@ -93,15 +72,12 @@ if (isset($_GET['msg'])) {
     echo "Vous êtes inscrit...bonne chance ";
   }
 }
-
-
-
-
 ?>
 
+
+<!-- Get the list of fighters from the database and displays two lists of fighters to choose from. They will fight to death -->
 <form action="./pages/arena.php">
   <?php
-
   $opponent_1_select = new Select("opponent1");
   $opponent_1_select->labelOption("Personnage");
   foreach ($fetchData as $person) {
@@ -115,9 +91,10 @@ if (isset($_GET['msg'])) {
     $opponent_2_select->createOptions($person->name);
   }
   $opponent_2_select->generateSelect();
-
   ?>
   <input type="submit">
 </form>
 
+
+<!-- Include the script to manage the index page. -->
 <script src="./scripts/index.js"></script>
