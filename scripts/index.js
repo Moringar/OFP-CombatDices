@@ -21,8 +21,6 @@ for(i=0; i<avatars.length; i++ ){
         shutThemDown();
         imageLabel.setAttribute("state", "selected")
         imageLabel.style.filter = "brightness(2)";
-
-
    })
 
 

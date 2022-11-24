@@ -1,5 +1,6 @@
 {
     "scripts": {
-        "SASS" : "sass ./style/index.scss/ ./style/index.css --watch"
+        "SASS" : "sass ./style/index.scss/ ./style/index.css --watch",
+        "GetBranch" : "git branch"
     }
 }
