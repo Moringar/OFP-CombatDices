@@ -142,10 +142,9 @@ else {
 
     // COMBAT !
     ?>
-
+    <link rel="stylesheet" href="../style/index.css">
 
     <section class="arena">
-        <h2>MORTAAAL KOOMMMBAAAAT</h2>
 
         <?php
         fight($opponent_A, $opponent_B, $d6);
@@ -158,14 +157,14 @@ else {
     $opponent_B_currentLife = $opponent_B->getLife();
 
 
-    $preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_A_currentLife' WHERE name = '$opponent_1_name'");
+    // $preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_A_currentLife' WHERE name = '$opponent_1_name'");
 
-    $preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_B_currentLife' WHERE name = '$opponent_2_name'");
+    // $preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_B_currentLife' WHERE name = '$opponent_2_name'");
 
 
-    $prepReq = $database->prepReq("DELETE FROM personnage WHERE point_vie <= 0");
+    // $prepReq = $database->prepReq("DELETE FROM personnage WHERE point_vie <= 0");
 
-    $preReq = $database->prepReq("UPDATE personnage SET point_vie = (point_vie + 25) WHERE point_vie < 100");
+    // $preReq = $database->prepReq("UPDATE personnage SET point_vie = (point_vie + 25) WHERE point_vie < 100");
 }
     ?>
 
