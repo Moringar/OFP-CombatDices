@@ -28,7 +28,7 @@ if($preReq->rowCount() > 0)
 } else
 
 {
-  $preReq = $database->prepReq("INSERT INTO personnage (name, point_vie, img_id) VALUE (:name, 100,:avatar_selection )", ["name" => $name, "avatar_selection" =>$avatar_selection]);
+  $preReq = $database->prepReq("INSERT INTO personnage (name, point_vie, img_id) VALUE (:name, 100,:avatar_selection )", ["name" => $name, "avatarselection" =>$avatar_selection]);
  
 }
 echo"<br>";
