@@ -9,6 +9,7 @@ $database->connect();
 
 
 $name = $_GET['name'];
+$avatar_selection = $_GET['avatar-selection'];
 
 
 
@@ -27,7 +28,7 @@ if($preReq->rowCount() > 0)
 } else
 
 {
-  $preReq = $database->prepReq("INSERT INTO personnage (name, point_vie) VALUE (:name, 100)", ["name" => $name]);
+  $preReq = $database->prepReq("INSERT INTO personnage (name, point_vie, img_id) VALUE (:name, 100,:avatar_selection )", ["name" => $name, "avatar_selection" =>$avatar_selection]);
  
 }
 echo"<br>";
