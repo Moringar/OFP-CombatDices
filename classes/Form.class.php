@@ -24,7 +24,7 @@ class Form{
 
     public function createRadio($name, $imageLink, $value){
         $this->fields[] = 
-        "<label><input type='radio' name=$name required value=$value hidden > $imageLink </label>";
+        "<label id=$name ><input type='radio' name=$name required value=$value > $imageLink </label>";
 
     }
             

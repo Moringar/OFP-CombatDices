@@ -4,8 +4,11 @@ spl_autoload_register(function ($class)
 {
   include 'classes/' . $class . '.class.php';
 });
-
 ?>
+
+<head>
+  <link rel="stylesheet" href="./style/index.css">
+</head>
 
 <h1>COMBAT ARENA</h1>
 
@@ -69,7 +72,7 @@ $formulaire->closeSection();
 
 
 
-$formulaire->createSubmitButton("Nouveau personnage");
+$formulaire->createSubmitButton("POUET");
 $formulaire->generateForm();
 
 ?>
@@ -116,3 +119,5 @@ if (isset($_GET['msg'])) {
   ?>
   <input type="submit">
 </form>
+
+<script src="./scripts/index.js"></script>
