@@ -12,31 +12,15 @@ round, result{
 
     p{
         text-align: center;
+        font-size: 20px;
+  }
 
-        opacity: 0;
-        animation: fadeIn 0.5s linear forwards;
-        animation-delay: 1s;
-          
-          @keyframes fadeIn {
-            from {
-              opacity: 0;
-            }
-            to {
-              opacity: 1;
-            }
-          }
-    }
-
-    .fA{
-        color: rgb(144, 0, 255);
-        align-self: flex-end;
-    }
-    .fb{
-        color: rgb(0, 127, 169);
-        align-self: flex-start;
-    }
-
-    
+  .fA{
+    color: rgb(0, 106, 255);
+  }
+  .fB{
+    color:red;
+  }
 }
 
 result{

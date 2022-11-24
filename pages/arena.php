@@ -83,13 +83,13 @@ function fight($fighterA, $fighterB, $dice)
         if ($fighterA->getLife() <= 0 or $fighterB->getLife() <= 0) {
             $isKO = true;
             if ($fighterA->getLife() <= 0) {
-                echo "<p>" . $fighterA->getName() . " n'est plus en mesure de se battre, " . $fighterB->getName() . " est le vainqueur.</p>";
+                echo "<p class='final'>" . $fighterA->getName() . " n'est plus en mesure de se battre, " . $fighterB->getName() . " est le vainqueur.</p>";
             }
             if ($fighterB->getLife() <= 0) {
-                echo "<p>" . $fighterB->getName() . " n'est plus en mesure de se battre, " . $fighterA->getName() . " est le vainqueur.</p>";
+                echo "<p class ='final'>" . $fighterB->getName() . " n'est plus en mesure de se battre, " . $fighterA->getName() . " est le vainqueur.</p>";
             }
         } else {
-            echo "<p>" . $fighterA->getName() . " a  " . $fighterA->getLife()  . " points de vie et " . $fighterB->getName() . " a " . $fighterB->getLife() . " points de vie.</p>";
+            echo "<p class='result'>" . $fighterA->getName() . " a  " . $fighterA->getLife()  . " points de vie et " . $fighterB->getName() . " a " . $fighterB->getLife() . " points de vie.</p>";
         }
         echo "</result>";
     }
@@ -118,8 +118,6 @@ else {
 
     $preReq = $database->prepReq("SELECT point_vie FROM personnage WHERE name ='$opponent_2_name'");
     $op2_lifePoints = $database->fetchdata(PDO::FETCH_OBJ);
-
-    var_dump($op2_lifePoints);
 
     $opponent_A = new Character($opponent_1_name);
     $opponent_B = new Character($opponent_2_name);
@@ -158,5 +156,6 @@ else {
 
     ?>
 
+<script src="../vendor/gsap.min.js"></script>
 <script src="../scripts/arena.js"></script>
 <a href="/">Retour à l'accueil</a>
