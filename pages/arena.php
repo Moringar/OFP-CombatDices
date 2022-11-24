@@ -49,51 +49,51 @@ function fight($fighterA, $fighterB, $dice)
         // Test d'initiative.
         $fighterA->setForce($dice->rollDice());
         $fighterB->setForce($dice->rollDice());
- 
+        echo "<round>";
 
         // Ordre d'attaque conséquent.
         if ($fighterA->getForce() > $fighterB->getForce()) {
             singleAttack($fighterA, $fighterB, $dice);
 
-            echo "<p>" . $fighterA->getName() . " a l'initiative et ".nameAttack()." " . $fighterB->getName() . " et lui inflige " . $fighterA->getAttackDamageValue() . " points de dégats </p>";
+            echo "<p class='fA'>" . $fighterA->getName() . " a l'initiative et ".nameAttack()." " . $fighterB->getName() . " et lui inflige " . $fighterA->getAttackDamageValue() . " points de dégats </p>";
 
             if ($fighterB->getLife() > 0) {
                 singleAttack($fighterB, $fighterA, $dice);
 
-                echo "<p>" . $fighterB->getName() . " riposte et ".nameAttack()." " . $fighterA->getName() . " lui infligeant " . $fighterB->getAttackDamageValue() . " points de dégats </p>";
+                echo "<p class='fB'>" . $fighterB->getName() . " riposte et ".nameAttack()." " . $fighterA->getName() . " lui infligeant " . $fighterB->getAttackDamageValue() . " points de dégats </p>";
             } else {
-                echo "<p>" . $fighterB->getName() . " succombe des coups de " . $fighterA->getName() . "</p>";
+                echo "<p class='fB'>" . $fighterB->getName() . " succombe des coups de " . $fighterA->getName() . "</p>";
             }
         } else {
             singleAttack($fighterB, $fighterA, $dice);
 
-            echo "<p>" . $fighterB->getName() . " a l'initiative et ".nameAttack()." " . $fighterA->getName() . " et lui inflige " . $fighterB->getAttackDamageValue() . " points de dégats </p>";
+            echo "<p class='fB'>" . $fighterB->getName() . " a l'initiative et ".nameAttack()." " . $fighterA->getName() . " et lui inflige " . $fighterB->getAttackDamageValue() . " points de dégats </p>";
 
             if ($fighterA->getLife() > 0) {
                 singleAttack($fighterA, $fighterB, $dice);
 
-                echo "<p>" . $fighterA->getName() . " riposte et ".nameAttack()." " . $fighterB->getName() . " lui infligeant " . $fighterA->getAttackDamageValue() . " points de dégats </p>";
+                echo "<p class='fA'>" . $fighterA->getName() . " riposte et ".nameAttack()." " . $fighterB->getName() . " lui infligeant " . $fighterA->getAttackDamageValue() . " points de dégats </p>";
             } else {
-                echo "<p>" . $fighterA->getName() . " succombe des coups de " . $fighterB->getName() . "</p>";
+                echo "<p class='fA'>" . $fighterA->getName() . " succombe des coups de " . $fighterB->getName() . "</p>";
             }
         }
+        echo "</round>";
 
+        echo "<result>";
         //Compte rendu de l'action et fin de boucle en cas de KO.
         if ($fighterA->getLife() <= 0 or $fighterB->getLife() <= 0) {
             $isKO = true;
 
             if ($fighterA->getLife() <= 0) {
-                echo "<hr>";
                 echo "<p>" . $fighterA->getName() . " n'est plus en mesure de se battre, " . $fighterB->getName() . " est le vainqueur.</p>";
             }
             if ($fighterB->getLife() <= 0) {
-                echo "<hr>";
                 echo "<p>" . $fighterB->getName() . " n'est plus en mesure de se battre, " . $fighterA->getName() . " est le vainqueur.</p>";
             }
         } else {
             echo "<p>" . $fighterA->getName() . " a  " . $fighterA->getLife()  . " points de vie et " . $fighterB->getName() . " a " . $fighterB->getLife() . " points de vie.</p>";
-            echo "<hr>";
         }
+        echo "</result>";
     }
 }
 
@@ -142,6 +142,8 @@ else {
 
     // COMBAT !
     ?>
+
+
     <link rel="stylesheet" href="../style/index.css">
 
     <section class="arena">
@@ -168,4 +170,5 @@ else {
 }
     ?>
 
+<script src="../scripts/arena.js"></script>
 <a href="/">Retour à l'accueil</a>

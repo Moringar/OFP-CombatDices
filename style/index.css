@@ -2,4 +2,40 @@ h1, h2, h3, h4, h5, p, a, li {
   font-family: sans-serif;
 }
 
+round, result {
+  max-width: 1200;
+  margin: 0px auto 0px auto;
+  display: flex;
+  flex-direction: column;
+}
+round p, result p {
+  text-align: center;
+  opacity: 0;
+  animation: fadeIn 0.5s linear forwards;
+  animation-delay: 1s;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+round .fA, result .fA {
+  color: rgb(144, 0, 255);
+  align-self: flex-end;
+}
+round .fb, result .fb {
+  color: rgb(0, 127, 169);
+  align-self: flex-start;
+}
+
+result {
+  margin-bottom: 30px;
+}
+result p {
+  font-weight: bold;
+}
+
 /*# sourceMappingURL=index.css.map */
