@@ -44,7 +44,6 @@ function singleAttack($attacker, $target, $dice)
 function fight($fighterA, $fighterB, $dice)
 {   
 
-    echo "<p class='result'> $fighterA [$fighterA->class] VERSUS $fighterB [$fighterB->class] </p>";
 
     $isKO = false;
     while (!$isKO) {
@@ -100,22 +99,24 @@ function fight($fighterA, $fighterB, $dice)
 
 
     // Instantiates new characters with data from the database. (Lifepoints, fighter classes ect.)
-    function newCharacters($opponent_data_from_dbb, $new_character_instance_name){
+    function newCharacters($opponent_data_from_dbb){
 
-        if($opponent_data_from_dbb[0]->class == "warrior"){
-            $new_character_instance_name = new Warrior($opponent_data_from_dbb);
-            $new_character_instance_name->setLife($opponent_data_from_dbb[0]->life);
-            $new_character_instance_name->setAvatar($opponent_data_from_dbb[0]->setAvatar);
+        if($opponent_data_from_dbb[0]->charaClass == "warrior"){
+            $currentName = new Warrior($opponent_data_from_dbb[0]->charaName);
+            $currentName->setLife($opponent_data_from_dbb[0]->charaLife);
+            return $currentName;
         }
-        if($opponent_data_from_dbb[0]->class == "archer"){
-            $new_character_instance_name = new Archer($opponent_data_from_dbb);
-            $new_character_instance_name->setLife($opponent_data_from_dbb[0]->life);
-            $new_character_instance_name->setAvatar($opponent_data_from_dbb[0]->setAvatar);
+        if($opponent_data_from_dbb[0]->charaClass == "archer"){
+            $currentName = new Archer($opponent_data_from_dbb[0]->charaName);
+            $currentName->setLife($opponent_data_from_dbb[0]->charaLife);
+
+            return $currentName;
         }
-        if($opponent_data_from_dbb[0]->class == "wizard"){
-            $new_character_instance_name = new Wizard($opponent_data_from_dbb);
-            $new_character_instance_name->setLife($opponent_data_from_dbb[0]->life);
-            $new_character_instance_name->setAvatar($opponent_data_from_dbb[0]->setAvatar);
+        if($opponent_data_from_dbb[0]->charaClass == "wizard"){
+            $currentName = new Wizard($opponent_data_from_dbb[0]->charaName);
+            $currentName->setLife($opponent_data_from_dbb[0]->charaLife);
+
+            return $currentName;
         }
     }
 
@@ -148,12 +149,12 @@ else {
 
 
     // PREMIER PERSONNAGE: Query des data du personnage
-    $preReq = $database->prepReq("SELECT point_vie FROM personnage WHERE name ='$opponent_1_name'");
-    $opponent_1_data = $database->fetchdata(PDO::FETCH_OBJ);
+    // $preReq = $database->prepReq("SELECT point_vie FROM personnage WHERE name ='$opponent_1_name'");
+    // $opponent_1_data = $database->fetchdata(PDO::FETCH_OBJ);
 
     // SECOND PERSONNAGE: Query des data du personnage
-    $preReq = $database->prepReq("SELECT point_vie FROM personnage WHERE name ='$opponent_2_name'");
-    $opponent_1_data = $database->fetchdata(PDO::FETCH_OBJ);
+    // $preReq = $database->prepReq("SELECT point_vie FROM personnage WHERE name ='$opponent_2_name'");
+    // $opponent_1_data = $database->fetchdata(PDO::FETCH_OBJ);
 
     ?>
 
@@ -167,9 +168,21 @@ else {
         // Instanciation d'un dé de jeu
         $d6 = new Dice(6);
 
+
+
+         // conn BD
+
+        $preReq = $database->prepReq("SELECT personnage.name as charaName, class.name as charaClass, personnage.point_vie as charaLife FROM  personnage INNER JOIN class ON personnage.class_id = class.id WHERE personnage.name = :name", ["name"=>$opponent_1_name]);
+        $opponent_1_data = $database->fetchdata(PDO::FETCH_OBJ);
+        $preReq = $database->prepReq("SELECT personnage.name as charaName, class.name as charaClass, personnage.point_vie as charaLife FROM  personnage INNER JOIN class ON personnage.class_id = class.id WHERE personnage.name = :name", ["name"=>$opponent_2_name]);
+        $opponent_2_data = $database->fetchdata(PDO::FETCH_OBJ);
+
+    
+
         //  nouvelles instances pour les deux personnages et hydratation depuis la BDD.
-        newCharacters($opponent_1_data,$opponent_A);
-        newCharacters($opponent_2_data,$opponent_B);
+        $opponent_A = newCharacters($opponent_1_data);
+        $opponent_B = newCharacters($opponent_2_data);
+        
 
         // Combat automatique des deux instances de personnage.
         fight($opponent_A, $opponent_B, $d6);
