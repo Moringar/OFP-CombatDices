@@ -70,6 +70,7 @@ input, .hero {
   font-weight: 700;
   font-size: 1.3em;
   text-align: center;
+  font-family: 'Press Start 2P', cursive !important;
 }
 
 form {
@@ -77,4 +78,8 @@ form {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+label {
+  text-transform: uppercase;
 }

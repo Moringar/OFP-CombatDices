@@ -5,6 +5,7 @@ class Form{
     private $form_action;
     private $class;
 
+    private $option = [];
     private $fields = [];
 
     /**
@@ -42,6 +43,25 @@ class Form{
         $this->fields[] = "</section>";
     }
 
+
+    
+
+    public function createOptions($value, $id)
+    {
+        $this->options[] = "<option value=$id>$value</option>";
+    }
+
+
+    public function generateSelect($name)
+    {
+        $this->fields[] = "<select name=$name option value>";
+
+        foreach ($this->options as $option) {
+            $this->fields[] = "$option";
+        }
+
+        $this->fields[] = "</select>";
+    }
 
 
     public function generateForm(){
