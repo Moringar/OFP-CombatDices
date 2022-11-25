@@ -11,7 +11,7 @@ spl_autoload_register(function ($class) {
 // Simulate a single attack name to add flavor to the combat.
 function nameAttack(){
     $attacks = [
-        "effectue une mawashigeri sur", 
+        "effectue un mawashigeri sur", 
         "frappe très fort", 
         "défonce le visage de", 
         "dégomme les côtes de",
@@ -19,10 +19,13 @@ function nameAttack(){
         "casse les dents de", 
         "délivre un immense crochet du menton a", 
         "attrape la table basse et l'énfonce dans", 
-        "lui fait une pichenette vigoureuse sur l'oreille de", 
+        "fait une pichenette vigoureuse sur l'oreille de", 
         "fait une brulûre indienne a", 
         "insulte violemment", 
-        "étale du piment dans les yeux de"
+        "étale du piment dans les yeux de",
+        "joue l'intégrale de Claude Barzotti sur une enceinte géante devant",
+        "lance du café brûlant sur", 
+        "raconte une histoire sordide a",
     ];
     $i = rand(0, sizeof($attacks)-1);
     return $attacks[$i];
@@ -80,13 +83,13 @@ function fight($fighterA, $fighterB, $dice)
         if ($fighterA->getLife() <= 0 or $fighterB->getLife() <= 0) {
             $isKO = true;
             if ($fighterA->getLife() <= 0) {
-                echo "<p>" . $fighterA->getName() . " n'est plus en mesure de se battre, " . $fighterB->getName() . " est le vainqueur.</p>";
+                echo "<p class='final'>" . $fighterA->getName() . " n'est plus en mesure de se battre, " . $fighterB->getName() . " est le vainqueur.</p>";
             }
             if ($fighterB->getLife() <= 0) {
-                echo "<p>" . $fighterB->getName() . " n'est plus en mesure de se battre, " . $fighterA->getName() . " est le vainqueur.</p>";
+                echo "<p class ='final'>" . $fighterB->getName() . " n'est plus en mesure de se battre, " . $fighterA->getName() . " est le vainqueur.</p>";
             }
         } else {
-            echo "<p>" . $fighterA->getName() . " a  " . $fighterA->getLife()  . " points de vie et " . $fighterB->getName() . " a " . $fighterB->getLife() . " points de vie.</p>";
+            echo "<p class='result'>" . $fighterA->getName() . " a  " . $fighterA->getLife()  . " points de vie et " . $fighterB->getName() . " a " . $fighterB->getLife() . " points de vie.</p>";
         }
         echo "</result>";
     }
@@ -115,8 +118,6 @@ else {
 
     $preReq = $database->prepReq("SELECT point_vie FROM personnage WHERE name ='$opponent_2_name'");
     $op2_lifePoints = $database->fetchdata(PDO::FETCH_OBJ);
-
-    var_dump($op2_lifePoints);
 
     $opponent_A = new Character($opponent_1_name);
     $opponent_B = new Character($opponent_2_name);
@@ -150,10 +151,11 @@ else {
     // $preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_B_currentLife' WHERE name = '$opponent_2_name'");
     // $prepReq = $database->prepReq("DELETE FROM personnage WHERE point_vie <= 0");
     // $preReq = $database->prepReq("UPDATE personnage SET point_vie = (point_vie + 25) WHERE point_vie < 100");
-    
+
 }    // ============ UPDATE DE DES COMBATTANTS ( FIN ) ============
 
     ?>
 
+<script src="../vendor/gsap.min.js"></script>
 <script src="../scripts/arena.js"></script>
 <a href="/">Retour à l'accueil</a>
