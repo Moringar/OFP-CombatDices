@@ -1,10 +1,11 @@
 <?php
-class Character{
+abstract class Character{
 
-    private $name;
-    public $lifePoints;
-    private $force;
-    private $attackDamageValue;
+    protected $name;
+    protected $lifePoints;
+    protected $force;
+    protected $attackDamageValue;
+    protected $avatar;
 
     function __construct($characterName)
     {
@@ -12,36 +13,36 @@ class Character{
         
     }
 
-    function setLife($lifePoints){
-        $this->lifePoints = $lifePoints;
+    public abstract function setLife($lifePoints);
+
+    public function setAvatar($avatar){
+        $this->avatar = $avatar;
     }
 
-    function setForce($forceRoll){
+    public function setForce($forceRoll){
         $this->force = $forceRoll;
     }
 
-    function setAttackDamageValue($attackRoll){
-        $this->attackDamageValue = $attackRoll * $this->force;
-    }
+    public abstract function setAttackDamageValue($attackRoll);
 
-    function getAttackDamageValue(){
+    public function getAttackDamageValue(){
         return $this->attackDamageValue;
     }
 
-    function getName(){
+    public function getName(){
         return $this->name;
     }
 
-    function getForce(){
+    public function getForce(){
         return $this->force;
     }
 
-    function getLife(){
+    public function getLife(){
         return $this->lifePoints;
     }
 
 
-    function attackOpponent($opponent){
+    public function attackOpponent($opponent){
         $opponent->lifePoints -= $this->attackDamageValue;
     }
 
