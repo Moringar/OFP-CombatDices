@@ -42,7 +42,10 @@ function singleAttack($attacker, $target, $dice)
 //simulate the whole fight between two opponents.
 // TODO : comment stages of the combat and clean that stuff. I'ts messy.
 function fight($fighterA, $fighterB, $dice)
-{
+{   
+
+    echo "<p class='result'> $fighterA [$fighterA->class] VERSUS $fighterB [$fighterB->class] </p>";
+
     $isKO = false;
     while (!$isKO) {
         // Init and force test. Will define who start first and define force of the action.
@@ -95,55 +98,94 @@ function fight($fighterA, $fighterB, $dice)
     }
 }
 
+
+    // Instantiates new characters with data from the database. (Lifepoints, fighter classes ect.)
+    function newCharacters($opponent_data_from_dbb, $new_character_instance_name){
+
+        if($opponent_data_from_dbb[0]->class == "warrior"){
+            $new_character_instance_name = new Warrior($opponent_data_from_dbb);
+            $new_character_instance_name->setLife($opponent_data_from_dbb[0]->life);
+            $new_character_instance_name->setAvatar($opponent_data_from_dbb[0]->setAvatar);
+        }
+        if($opponent_data_from_dbb[0]->class == "archer"){
+            $new_character_instance_name = new Archer($opponent_data_from_dbb);
+            $new_character_instance_name->setLife($opponent_data_from_dbb[0]->life);
+            $new_character_instance_name->setAvatar($opponent_data_from_dbb[0]->setAvatar);
+        }
+        if($opponent_data_from_dbb[0]->class == "wizard"){
+            $new_character_instance_name = new Wizard($opponent_data_from_dbb);
+            $new_character_instance_name->setLife($opponent_data_from_dbb[0]->life);
+            $new_character_instance_name->setAvatar($opponent_data_from_dbb[0]->setAvatar);
+        }
+    }
+
+
 // Début de partie =======================================================================================================================
 //======================================================================================================================================
 
-// displays the message If the player entered the arena without choosing opponent.
+
+// ERROR : displays the message If the player entered the arena without choosing opponent.
 if( $_GET["opponent1"] == '' || $_GET["opponent2"]  == '' ){
     echo"Choose a personnage to play <br>";
 }
-// displays a message if the player made a character fight iteself.
+
+// ERROR :displays a message if the player made a character fight iteself.
 else if ( $_GET["opponent1"] == $_GET["opponent2"]){
     echo "Suicide is a very bad idea, call for help. <br>";
 }
+
+// GO : starts the procedure of preparation and execution of the fight.
 else {
+
+
+    // Nouvelle instance de DATABASE
     $database = new Database("localhost", "root", "combat_dices", "root");
     $database->connect();
-    // list of personnage
+
+    // Récupère les noms des combattants a inclure dans le combat depuis le formulaire.
     $opponent_1_name = $_GET["opponent1"];
     $opponent_2_name = $_GET["opponent2"];
 
+
+    // PREMIER PERSONNAGE: Query des data du personnage
     $preReq = $database->prepReq("SELECT point_vie FROM personnage WHERE name ='$opponent_1_name'");
-    $op1_lifePoints = $database->fetchdata(PDO::FETCH_OBJ);
+    $opponent_1_data = $database->fetchdata(PDO::FETCH_OBJ);
 
+    // SECOND PERSONNAGE: Query des data du personnage
     $preReq = $database->prepReq("SELECT point_vie FROM personnage WHERE name ='$opponent_2_name'");
-    $op2_lifePoints = $database->fetchdata(PDO::FETCH_OBJ);
+    $opponent_1_data = $database->fetchdata(PDO::FETCH_OBJ);
 
-    $opponent_A = new Character($opponent_1_name);
-    $opponent_B = new Character($opponent_2_name);
-
-    $opponent_A->setLife($op1_lifePoints[0]->point_vie);
-    $opponent_B->setLife($op2_lifePoints[0]->point_vie);
     ?>
 
 <!-- Inclusion de la feuille de style. -->
     <link rel="stylesheet" href="../style/index.css">
 
-    <!-- Création de l'ARENA, définition de la valeur de dé et appel de la fonction de combat a mort complète. -->
+
+    <!-- ARENA, where fighters come to die -->
     <section class="arena">
         <?php
+        // Instanciation d'un dé de jeu
         $d6 = new Dice(6);
+
+        //  nouvelles instances pour les deux personnages et hydratation depuis la BDD.
+        newCharacters($opponent_1_data,$opponent_A);
+        newCharacters($opponent_2_data,$opponent_B);
+
+        // Combat automatique des deux instances de personnage.
         fight($opponent_A, $opponent_B, $d6);
         ?>
     </section>
 
-    <?php
 
+
+
+    <?php
+    //Gets opponents life to update the BDD at the end of the fight
     $opponent_A_currentLife = $opponent_A->getLife();
     $opponent_B_currentLife = $opponent_B->getLife();
 
-
     // ============ UPDATE DE DES COMBATTANTS ( DEBUT ) ============ 
+
     //  Commented to work ok style 
     // TODO: reactivate it before leaving.
 
