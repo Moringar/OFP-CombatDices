@@ -3,6 +3,7 @@ class Form{
 
     private $form_method;
     private $form_action;
+    private $class;
 
     private $fields = [];
 
@@ -10,21 +11,22 @@ class Form{
      * @param $actionField define the method used by the form.
      * @param $methodField defines the action, the page the data will be sent to when it's submitted.
      */
-    function __construct($actionField, $methodField)
+    function __construct($actionField, $methodField, $class = "")
     {
         $this->form_action = $actionField;
         $this->form_method = $methodField;
+        $this->class = $class;
     }
 
     public function createField($type, $fieldPublicName, $fieldName, $placeholder){
-        $this->fields[] = "<label for=$fieldName>$fieldPublicName</label> 
-        <input type=$type name=$fieldName placeholder=$placeholder required>";
+        $this->fields[] = "<label class='hero' for=$fieldName>$fieldPublicName</label> 
+        <input class='hero' type=$type name=$fieldName placeholder=$placeholder required>";
 
     }
 
     public function createRadio($name, $imageLink, $value){
         $this->fields[] = 
-        "<label id=$name ><input type='radio' name=$name required value=$value > $imageLink </label>";
+        "<label id=$name><input type='radio'hidden name=$name required value=$value > $imageLink </label>";
 
     }
             
@@ -43,7 +45,7 @@ class Form{
 
 
     public function generateForm(){
-        echo "<form action='$this->form_action'method='$this->form_method' >";
+        echo "<form action='$this->form_action'method='$this->form_method' class=$this->class>";
 
             foreach($this->fields as $field){
                 echo $field;

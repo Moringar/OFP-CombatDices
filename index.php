@@ -1,13 +1,16 @@
 <?php
 // TODO : autoload classes.
-spl_autoload_register(function ($class) 
-{
+spl_autoload_register(function ($class) {
   include 'classes/' . $class . '.class.php';
 });
 ?>
 
 <!-- Includes the stylesheet -->
+
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style/index.css">
 </head>
 
@@ -20,41 +23,39 @@ $database->connect();
 
 // Inserts links of files in the IMG folder to the database.
 $files = array_diff(scandir('assets/img/'), array('.', '..'));
-foreach ($files as $file) 
-{
+foreach ($files as $file) {
   $link = "<img src='/assets/img/$file'>";
   $linkCheck = $database->prepReq("SELECT * FROM avatar WHERE link = :link", ["link" => $link]);
-  if ($linkCheck->rowCount() === 0) 
-  {
+  if ($linkCheck->rowCount() === 0) {
     $database->prepReq("INSERT INTO avatar (link) VALUE (:link)", ['link' => $link]);
     echo "<br>";
-  } 
+  }
 }
 
 // Displays a list of all the created characters
 $preReq = $database->prepReq("SELECT name, point_vie FROM personnage");
 $fetchData = $database->fetchdata(PDO::FETCH_OBJ);
 
-echo "<ul>";
 foreach ($fetchData as $person) {
-  echo "<li class='life'>$person->name [PV: $person->point_vie ] </li>";
+  echo "<p class='life'>$person->name [PV: $person->point_vie ] </p>";
 }
-echo "<ul>";
 
-echo "<hr>";
+// echo "<hr>";
 
 
 // Generate a form to add fighter to the bdd, and assign it a fighter portrait.
-$formulaire = new Form("./pages/register.php", "GET");
+$formulaire = new Form("./pages/register.php", "GET", "form-1");
+$formulaire->openSection();
 $formulaire->createField("text", "name", "name", "Héro");
+$formulaire->createSubmitButton("POUET");
+$formulaire->closeSection();
 $formulaire->openSection();
 $database->prepReq("SELECT link, id FROM avatar ");
 $listAvatar = $database->fetchdata(PDO::FETCH_OBJ);
-foreach($listAvatar as $avatar){
+foreach ($listAvatar as $avatar) {
   $formulaire->createRadio("avatar-selection", $avatar->link, $avatar->id);
 }
 $formulaire->closeSection();
-$formulaire->createSubmitButton("POUET");
 $formulaire->generateForm();
 ?>
 
