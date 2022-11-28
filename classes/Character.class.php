@@ -46,5 +46,9 @@ abstract class Character{
         $opponent->lifePoints -= $this->attackDamageValue;
     }
 
+    public function isAlive (): bool {
+        return false; // TODO
+    }
+
 }
 ?>

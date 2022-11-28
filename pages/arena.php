@@ -9,25 +9,26 @@ spl_autoload_register(function ($class) {
 
 //  FUNCTIONS ===================================================================================
 // Simulate a single attack name to add flavor to the combat.
-function nameAttack(){
+function nameAttack()
+{
     $attacks = [
-        "effectue un mawashigeri sur", 
-        "frappe très fort", 
-        "défonce le visage de", 
+        "effectue un mawashigeri sur",
+        "frappe très fort",
+        "défonce le visage de",
         "dégomme les côtes de",
-        "démonte les genoux de ", 
-        "casse les dents de", 
-        "délivre un immense crochet du menton a", 
-        "attrape la table basse et l'énfonce dans", 
-        "fait une pichenette vigoureuse sur l'oreille de", 
-        "fait une brulûre indienne a", 
-        "insulte violemment", 
+        "démonte les genoux de ",
+        "casse les dents de",
+        "délivre un immense crochet du menton a",
+        "attrape la table basse et l'énfonce dans",
+        "fait une pichenette vigoureuse sur l'oreille de",
+        "fait une brulûre indienne a",
+        "insulte violemment",
         "étale du piment dans les yeux de",
         "joue l'intégrale de Claude Barzotti sur une enceinte géante devant",
-        "lance du café brûlant sur", 
+        "lance du café brûlant sur",
         "raconte une histoire sordide a",
     ];
-    $i = rand(0, sizeof($attacks)-1);
+    $i = rand(0, sizeof($attacks) - 1);
     return $attacks[$i];
 }
 
@@ -42,7 +43,7 @@ function singleAttack($attacker, $target, $dice)
 //simulate the whole fight between two opponents.
 // TODO : comment stages of the combat and clean that stuff. I'ts messy.
 function fight($fighterA, $fighterB, $dice)
-{   
+{
 
 
     $isKO = false;
@@ -56,24 +57,24 @@ function fight($fighterA, $fighterB, $dice)
         if ($fighterA->getForce() > $fighterB->getForce()) {
             singleAttack($fighterA, $fighterB, $dice);
 
-            echo "<p class='fA'>" . $fighterA->getName() . " a l'initiative et ".nameAttack()." " . $fighterB->getName() . " et lui inflige " . $fighterA->getAttackDamageValue() . " points de dégats </p>";
+            echo "<p class='fA'>" . $fighterA->getName() . " a l'initiative et " . nameAttack() . " " . $fighterB->getName() . " et lui inflige " . $fighterA->getAttackDamageValue() . " points de dégats </p>";
 
             if ($fighterB->getLife() > 0) {
                 singleAttack($fighterB, $fighterA, $dice);
 
-                echo "<p class='fB'>" . $fighterB->getName() . " riposte et ".nameAttack()." " . $fighterA->getName() . " lui infligeant " . $fighterB->getAttackDamageValue() . " points de dégats </p>";
+                echo "<p class='fB'>" . $fighterB->getName() . " riposte et " . nameAttack() . " " . $fighterA->getName() . " lui infligeant " . $fighterB->getAttackDamageValue() . " points de dégats </p>";
             } else {
                 echo "<p class='fB'>" . $fighterB->getName() . " succombe des coups de " . $fighterA->getName() . "</p>";
             }
         } else {
             singleAttack($fighterB, $fighterA, $dice);
 
-            echo "<p class='fB'>" . $fighterB->getName() . " a l'initiative et ".nameAttack()." " . $fighterA->getName() . " et lui inflige " . $fighterB->getAttackDamageValue() . " points de dégats </p>";
+            echo "<p class='fB'>" . $fighterB->getName() . " a l'initiative et " . nameAttack() . " " . $fighterA->getName() . " et lui inflige " . $fighterB->getAttackDamageValue() . " points de dégats </p>";
 
             if ($fighterA->getLife() > 0) {
                 singleAttack($fighterA, $fighterB, $dice);
 
-                echo "<p class='fA'>" . $fighterA->getName() . " riposte et ".nameAttack()." " . $fighterB->getName() . " lui infligeant " . $fighterA->getAttackDamageValue() . " points de dégats </p>";
+                echo "<p class='fA'>" . $fighterA->getName() . " riposte et " . nameAttack() . " " . $fighterB->getName() . " lui infligeant " . $fighterA->getAttackDamageValue() . " points de dégats </p>";
             } else {
                 echo "<p class='fA'>" . $fighterA->getName() . " succombe des coups de " . $fighterB->getName() . "</p>";
             }
@@ -98,27 +99,28 @@ function fight($fighterA, $fighterB, $dice)
 }
 
 
-    // Instantiates new characters with data from the database. (Lifepoints, fighter classes ect.)
-    function newCharacters($opponent_data_from_dbb){
+// Instantiates new characters with data from the database. (Lifepoints, fighter classes ect.)
+function newCharacters($opponent_data_from_dbb)
+{
 
-        if($opponent_data_from_dbb[0]->charaClass == "warrior"){
-            $currentName = new Warrior($opponent_data_from_dbb[0]->charaName);
-            $currentName->setLife($opponent_data_from_dbb[0]->charaLife);
-            return $currentName;
-        }
-        if($opponent_data_from_dbb[0]->charaClass == "archer"){
-            $currentName = new Archer($opponent_data_from_dbb[0]->charaName);
-            $currentName->setLife($opponent_data_from_dbb[0]->charaLife);
-
-            return $currentName;
-        }
-        if($opponent_data_from_dbb[0]->charaClass == "wizard"){
-            $currentName = new Wizard($opponent_data_from_dbb[0]->charaName);
-            $currentName->setLife($opponent_data_from_dbb[0]->charaLife);
-
-            return $currentName;
-        }
+    if ($opponent_data_from_dbb[0]->charaClass == "warrior") {
+        $currentName = new Warrior($opponent_data_from_dbb[0]->charaName);
+        $currentName->setLife($opponent_data_from_dbb[0]->charaLife);
+        return $currentName;
     }
+    if ($opponent_data_from_dbb[0]->charaClass == "archer") {
+        $currentName = new Archer($opponent_data_from_dbb[0]->charaName);
+        $currentName->setLife($opponent_data_from_dbb[0]->charaLife);
+
+        return $currentName;
+    }
+    if ($opponent_data_from_dbb[0]->charaClass == "wizard") {
+        $currentName = new Wizard($opponent_data_from_dbb[0]->charaName);
+        $currentName->setLife($opponent_data_from_dbb[0]->charaLife);
+
+        return $currentName;
+    }
+}
 
 
 // Début de partie =======================================================================================================================
@@ -126,12 +128,12 @@ function fight($fighterA, $fighterB, $dice)
 
 
 // ERROR : displays the message If the player entered the arena without choosing opponent.
-if( $_GET["opponent1"] == '' || $_GET["opponent2"]  == '' ){
-    echo"Choose a personnage to play <br>";
+if ($_GET["opponent1"] == '' || $_GET["opponent2"]  == '') {
+    echo "Choose a personnage to play <br>";
 }
 
 // ERROR :displays a message if the player made a character fight iteself.
-else if ( $_GET["opponent1"] == $_GET["opponent2"]){
+else if ($_GET["opponent1"] == $_GET["opponent2"]) {
     echo "Suicide is a very bad idea, call for help. <br>";
 }
 
@@ -156,9 +158,9 @@ else {
     // $preReq = $database->prepReq("SELECT point_vie FROM personnage WHERE name ='$opponent_2_name'");
     // $opponent_1_data = $database->fetchdata(PDO::FETCH_OBJ);
 
-    ?>
+?>
 
-<!-- Inclusion de la feuille de style. -->
+    <!-- Inclusion de la feuille de style. -->
     <link rel="stylesheet" href="../style/index.css">
 
 
@@ -170,19 +172,19 @@ else {
 
 
 
-         // conn BD
+        // conn BD
 
-        $preReq = $database->prepReq("SELECT personnage.name as charaName, class.name as charaClass, personnage.point_vie as charaLife FROM  personnage INNER JOIN class ON personnage.class_id = class.id WHERE personnage.name = :name", ["name"=>$opponent_1_name]);
+        $preReq = $database->prepReq("SELECT personnage.name as charaName, class.name as charaClass, personnage.point_vie as charaLife FROM  personnage INNER JOIN class ON personnage.class_id = class.id WHERE personnage.name = :name", ["name" => $opponent_1_name]);
         $opponent_1_data = $database->fetchdata(PDO::FETCH_OBJ);
-        $preReq = $database->prepReq("SELECT personnage.name as charaName, class.name as charaClass, personnage.point_vie as charaLife FROM  personnage INNER JOIN class ON personnage.class_id = class.id WHERE personnage.name = :name", ["name"=>$opponent_2_name]);
+        $preReq = $database->prepReq("SELECT personnage.name as charaName, class.name as charaClass, personnage.point_vie as charaLife FROM  personnage INNER JOIN class ON personnage.class_id = class.id WHERE personnage.name = :name", ["name" => $opponent_2_name]);
         $opponent_2_data = $database->fetchdata(PDO::FETCH_OBJ);
 
-    
+
 
         //  nouvelles instances pour les deux personnages et hydratation depuis la BDD.
         $opponent_A = newCharacters($opponent_1_data);
         $opponent_B = newCharacters($opponent_2_data);
-        
+
 
         // Combat automatique des deux instances de personnage.
         fight($opponent_A, $opponent_B, $d6);
@@ -192,7 +194,7 @@ else {
 
 
 
-    <?php
+<?php
     //Gets opponents life to update the BDD at the end of the fight
     $opponent_A_currentLife = $opponent_A->getLife();
     $opponent_B_currentLife = $opponent_B->getLife();
@@ -202,14 +204,13 @@ else {
     //  Commented to work ok style 
     // TODO: reactivate it before leaving.
 
-    // $preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_A_currentLife' WHERE name = '$opponent_1_name'");
-    // $preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_B_currentLife' WHERE name = '$opponent_2_name'");
-    // $prepReq = $database->prepReq("DELETE FROM personnage WHERE point_vie <= 0");
-    // $preReq = $database->prepReq("UPDATE personnage SET point_vie = (point_vie + 25) WHERE point_vie < 100");
-
+    $preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_A_currentLife' WHERE name = '$opponent_1_name'");
+    $preReq = $database->prepReq("UPDATE personnage SET point_vie = '$opponent_B_currentLife' WHERE name = '$opponent_2_name'");
+    $prepReq = $database->prepReq("DELETE FROM personnage WHERE point_vie <= 0");
+    $preReq = $database->prepReq("UPDATE personnage SET point_vie = (point_vie + 25) WHERE point_vie < 100");
 }    // ============ UPDATE DE DES COMBATTANTS ( FIN ) ============
 
-    ?>
+?>
 
 <script src="../vendor/gsap.min.js"></script>
 <script src="../scripts/arena.js"></script>

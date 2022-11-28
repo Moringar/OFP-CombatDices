@@ -60,8 +60,8 @@ $formulaire->createSubmitButton("POUET");
  $database->prepReq("SELECT name, id FROM class");
  $classList = $database->fetchdata(PDO::FETCH_OBJ);
 
- $formulaire->createOptions("Choose a class", "N/A")
-; foreach($classList as $class){
+ $formulaire->createOptions("Choose a class", "N/A"); 
+ foreach($classList as $class){
   $formulaire->createOptions($class->name, $class->id);
  }
  $formulaire->generateSelect("class");
